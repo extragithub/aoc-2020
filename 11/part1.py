@@ -66,7 +66,7 @@ def run_pass(seats):
 
 
 def solve_puzzle(input_data):
-    rows = input_data.split("\n")
+    rows = input_data.tokens
     seats = [[char for char in row] for row in rows]
 
     previous = 0
