@@ -15,9 +15,7 @@ def start(buses):
 
 def solve_puzzle(input_data):
     buses = input_data[1].split(",")
-
     bus_info = start(buses)
-    print(bus_info)
 
     # set initial info
     bus = bus_info[0]
