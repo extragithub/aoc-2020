@@ -27,8 +27,9 @@ So, because of the mask, the value 73 is written to memory address 8 instead. Th
 value:  000000000000000000000000000001100101  (decimal 101)
 mask:   XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
 result: 000000000000000000000000000001100101  (decimal 101)
+```
 This time, the mask has no effect, as the bits it overwrote were already the values the mask tried to set. Finally, the program tries to write 0 to address 8:
-
+```
 value:  000000000000000000000000000000000000  (decimal 0)
 mask:   XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X
 result: 000000000000000000000000000001000000  (decimal 64)
