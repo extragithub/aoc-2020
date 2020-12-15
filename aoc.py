@@ -26,8 +26,8 @@ cmd_new.spec = [
     {
         "name": ["-d", "--day"],
         "help": "day to initialize: default is 0 to auto-select",
-        "type": int,
-        "default": 0,
+        "type": type(Days.New.__defaults__[0]),
+        "default": Days.New.__defaults__[0],
     }
 ]
 
@@ -41,14 +41,14 @@ cmd_run.spec = [
     {
         "name": ["-d", "--day"],
         "help": "day to run solution(s) for: default is -1 for latest",
-        "type": int,
-        "default": -1,
+        "type": type(Days.Run.__defaults__[0]),
+        "default": Days.Run.__defaults__[0],
     },
     {
         "name": ["-p", "--part"],
         "help": "part of day to run solution(s) for: default is 0 for both",
-        "type": int,
-        "default": 0,
+        "type": type(Days.Run.__defaults__[1]),
+        "default": Days.Run.__defaults__[1],
     },
 ]
 
@@ -62,20 +62,20 @@ cmd_test.spec = [
     {
         "name": ["-d", "--day"],
         "help": "day to run test(s) for: default is -1 for latest",
-        "type": int,
-        "default": -1,
+        "type": type(Days.Test.__defaults__[0]),
+        "default": Days.Test.__defaults__[0],
     },
     {
         "name": ["-p", "--part"],
         "help": "part of day to run test(s) for: default is 0 for both",
-        "type": int,
-        "default": 0,
+        "type": type(Days.Test.__defaults__[1]),
+        "default": Days.Test.__defaults__[1],
     },
     {
         "name": ["-t", "--test"],
         "help": "test info to use: default is 0 for all",
-        "type": int,
-        "default": 0,
+        "type": type(Days.Test.__defaults__[2]),
+        "default": Days.Test.__defaults__[2],
     },
 ]
 
@@ -89,8 +89,8 @@ cmd_view.spec = [
     {
         "name": ["-d", "--day"],
         "help": "day to view information about: default is -1 for latest",
-        "type": int,
-        "default": -1,
+        "type": type(Days.View.__defaults__[0]),
+        "default": Days.View.__defaults__[0],
     }
 ]
 

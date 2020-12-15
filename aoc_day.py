@@ -242,14 +242,10 @@ class Day(int):
 
         for filename in os.listdir(self.path):
             try:
-                # _AttachFile(self, filename)
                 _FileInterface.Attach(self, filename)
             except ValueError as error:
                 # print(error)
                 pass
-
-        # print(self, dir(self))
-        # raise NotImplementedError()
 
     def _init_state(self):
         os.makedirs(self.path)
@@ -371,7 +367,7 @@ class Days:
         self.days.append(Day(self.path, str(day)))
         print("Initialized", self.days[-1])
 
-    def Run(self, day=0, part=0):
+    def Run(self, day=-1, part=0):
         if day == -1:
             self[-1].Run(part)
         elif day == 0:
@@ -383,7 +379,7 @@ class Days:
             except KeyError:
                 UninitializedError(day)
 
-    def Test(self, day=0, part=0, test=0):
+    def Test(self, day=-1, part=0, test=0):
         if day == -1:
             self[-1].Test(part, test)
         elif day == 0:
@@ -395,8 +391,8 @@ class Days:
             except KeyError:
                 UninitializedError(day)
 
-    def View(self, day=0):
-        if day == 0:
+    def View(self, day=-1):
+        if day == -1:
             self[-1].View()
         else:
             try:
