@@ -266,18 +266,17 @@ class Day(int):
         return "*" * len(self.solution_)
 
     def _run(self, part, data):
+        start = time.time()
         solution = self.run_[part](data)
+        end = time.time()
 
         if part == 0:
             filename = "solution.txt"
         else:
             filename = f"solution{part}.txt"
 
-        # _AttachFile(self, filename)
         _FileInterface.Attach(self, filename)
-        start = time.time()
         self.solution_[part](solution)
-        end = time.time()
         print("=" * 40)
         print(f" Day {self.day}, Part {part} - Puzzle Input")
         print("-" * 40)
