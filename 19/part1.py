@@ -8,23 +8,23 @@ from collections import defaultdict
 def resolve_sub_rule(rules, index):
     if isinstance(index, int):
         if isinstance(rules[index], str):
-            # print("LOOKUP", rules, index)
-            return rules[index]
+            ret = rules[index]
+            return ret
 
         elif isinstance(rules[index], list):
-            # print("OR", rules, index)
-            return "({})".format(
+            ret = "({})".format(
                 "|".join(
                     [resolve_sub_rule(rules, sub_rule) for sub_rule in rules[index]]
                 )
             )
+            return ret
 
         else:
             raise Exception()
 
     elif isinstance(index, list):
-        # print("AND", rules, index)
-        return "".join([resolve_sub_rule(rules, sub_rule) for sub_rule in index])
+        ret = "".join([resolve_sub_rule(rules, sub_rule) for sub_rule in index])
+        return ret
 
     else:
         raise Exception()
@@ -59,19 +59,56 @@ def parse_rules(rules):
     return parsed
 
 
+def translate_rules(rules):
+    translated = dict()
+    for rule in rules:
+        key, val = rule.split(":")
+        translated[key] = val.strip(' "')
+
+    # replace all direct character mappings
+    char_map = {key: val for key, val in translated.items() if len(val) == 1}
+
+    for key, val in translated.items():
+        mapped = f" {val} "
+        for map_from, map_to in char_map.items():
+            map_from = f" {map_from} "
+            map_to = f" {map_to} "
+            mapped = mapped.replace(map_from, map_to)
+
+        if "|" in mapped:
+            mapped = f"( {mapped} )"
+
+        translated[key] = mapped
+
+    # do the remaining replacements
+    found = True
+    while found:
+        found = False
+
+        for key, val in translated.items():
+            for map_from, map_to in translated.items():
+                map_from = f" {map_from} "
+                map_to = f" {map_to} "
+                if map_from in val:
+                    found = True
+                    val = val.replace(map_from, map_to)
+
+            translated[key] = val
+
+    return {int(key): val.replace(" ", "") for key, val in translated.items()}
+
+
 def solve_puzzle(input_data):
     messages = input_data.groups[1]
     rules = parse_rules(input_data.groups[0])
 
-    regex = "^{}$".format(
-        "".join([resolve_sub_rule(rules, sub_rule) for sub_rule in rules[0]])
-    )
-    print(regex)
+    translated = translate_rules(input_data.groups[0])
+    regex = f"{translated[0]}"
 
-    valid = list()
+    matches = 0
     for message in messages:
-        print(re.match(regex, message))
-        if re.match(regex, message):
-            valid.append(message)
+        match = re.fullmatch(regex, message)
+        if match:
+            matches += 1
 
-    return len(valid)
+    return matches
