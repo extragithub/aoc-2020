@@ -63,6 +63,7 @@ class _FileInterface:
 
         self.data = None
         self.lines = []
+        self.groups = []
         if os.path.exists(filepath):
             self._read()
 
@@ -93,6 +94,18 @@ class _FileInterface:
         with open(self.path, "r") as openfile:
             self.data = openfile.read()
         self.lines = self.data.split("\n")
+
+        group = list()
+        for line in self.lines:
+            if len(line) == 0:
+                if len(group) > 0:
+                    self.groups.append(group)
+                group = list()
+            else:
+                group.append(line)
+
+        if len(group) > 0:
+            self.groups.append(group)
 
     def _run(self, data, **kwargs):
         spec = importlib.util.spec_from_file_location("run", self.path)
